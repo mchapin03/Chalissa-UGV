@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="diffbot_ros2_control" params="front_port rear_port qppr:=3000 baud:=115200">
+
+    <!-- Front RoboClaw: front left + front right -->
+    <ros2_control name="roboclaw_front" type="system">
+      <hardware>
+        <plugin>roboclaw_hardware_interface/RoboClawHardwareInterface</plugin>
+        <param name="serial_port">${front_port}</param>
+        <param name="serial_baud">${baud}</param>
+      </hardware>
+
+      <joint name="front_left_wheel_joint">
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <param name="address">128</param>
+        <param name="motor_type">M1</param>
+        <param name="qppr">${qppr}</param>
+      </joint>
+
+      <joint name="front_right_wheel_joint">
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <param name="address">128</param>
+        <param name="motor_type">M2</param>
+        <param name="qppr">${qppr}</param>
+      </joint>
+    </ros2_control>
+
+    <!-- Rear RoboClaw: rear left + rear right -->
+    <ros2_control name="roboclaw_rear" type="system">
+      <hardware>
+        <plugin>roboclaw_hardware_interface/RoboClawHardwareInterface</plugin>
+        <param name="serial_port">${rear_port}</param>
+        <param name="serial_baud">${baud}</param>
+      </hardware>
+
+      <joint name="rear_left_wheel_joint">
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <param name="address">129</param>
+        <param name="motor_type">M1</param>
+        <param name="qppr">${qppr}</param>
+      </joint>
+
+      <joint name="rear_right_wheel_joint">
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <param name="address">129</param>
+        <param name="motor_type">M2</param>
+        <param name="qppr">${qppr}</param>
+      </joint>
+    </ros2_control>
+
+  </xacro:macro>
+
+</robot>
